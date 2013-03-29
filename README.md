@@ -1,4 +1,7 @@
-php-ioncube
-===========
+# php-ioncube cookbook
 
-Chef cookbook for PHP Zend ioncube extension
+Installs and configures Zend Ioncube extension
+
+# Usage
+
+include_recipe "php-ioncube"
