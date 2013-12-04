@@ -8,7 +8,7 @@ pkgs.each do |pkg|
 end
 
 remote_file "/usr/local/src/ioncube_loaders_lin_x86-64.tar.gz" do
-  source "http://downloads2.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
+  source "http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
   mode "0644"
   action :create_if_missing
   notifies :run, "script[extract_ioncube_php]", :immediately
