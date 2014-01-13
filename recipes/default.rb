@@ -8,7 +8,7 @@ pkgs.each do |pkg|
 end
 
 remote_file "/usr/local/src/ioncube_loaders_lin_x86-64.tar.gz" do
-  source "http://downloads2.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
+  source "http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
   mode "0644"
   action :create_if_missing
   notifies :run, "script[extract_ioncube_php]", :immediately
@@ -26,7 +26,7 @@ script "extract_ioncube_php" do
 end
 
 file "#{node['php']['ext_conf_dir']}/ioncube.ini" do
-  content "zend_extension=/usr/local/ioncube/ioncube_loader_lin_5.3.so"
+  content "zend_extension=/usr/local/ioncube/ioncube_loader_lin_" + node[:php_ioncube][:version] + ".so"
   owner "root"
   group "root"
   mode "0644"
