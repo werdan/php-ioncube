@@ -1,1 +1,1 @@
-default['php_ioncube']['version'] = '5.3'
+default['php_ioncube']['version'] = ''

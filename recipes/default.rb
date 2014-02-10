@@ -25,8 +25,19 @@ script "extract_ioncube_php" do
   EOH
 end
 
+ruby_block "determine php version" do
+  block do
+    php_version_output = `php --version`
+    php_version = php_version_output.match(/PHP ([0-9]+\.[0-9]+)\.[0-9]+/)[1]
+    Chef::Log.info("detected PHP version #{php_version}")
+    ioncube_file_resource = run_context.resource_collection.find(:file => "#{node['php']['ext_conf_dir']}/ioncube.ini")
+    ioncube_file_resource.content "zend_extension=/usr/local/ioncube/ioncube_loader_lin_" + php_version + ".so\n"
+  end
+  only_if { node['php_ioncube']['version'] == '' }
+end
+
 file "#{node['php']['ext_conf_dir']}/ioncube.ini" do
-  content "zend_extension=/usr/local/ioncube/ioncube_loader_lin_" + node[:php_ioncube][:version] + ".so"
+  content "zend_extension=/usr/local/ioncube/ioncube_loader_lin_" + node['php_ioncube']['version'] + ".so\n"  # dynamically defined during convergence in above ruby_block
   owner "root"
   group "root"
   mode "0644"
