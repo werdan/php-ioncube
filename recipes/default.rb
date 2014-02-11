@@ -7,8 +7,19 @@ pkgs.each do |pkg|
   end
 end
 
-remote_file "/usr/local/src/ioncube_loaders_lin_x86-64.tar.gz" do
-  source "http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
+case node[:kernel][:machine]
+when 'x86_64'
+  arch = 'x86-64'
+when /i[36]86/
+  arch = 'x86'
+else
+  arch = node[:kernel][:machine]
+end
+
+Chef::Log.info("using ionCube architecture #{arch}")
+
+remote_file "/usr/local/src/ioncube_loaders_lin_#{arch}.tar.gz" do
+  source "http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_#{arch}.tar.gz"
   mode "0644"
   action :create_if_missing
   notifies :run, "script[extract_ioncube_php]", :immediately
@@ -20,7 +31,7 @@ script "extract_ioncube_php" do
   cwd "/usr/local/src/"
   action :nothing
   code <<-EOH
-  tar xvfz /usr/local/src/ioncube_loaders_lin_x86-64.tar.gz
+  tar xvfz /usr/local/src/ioncube_loaders_lin_#{arch}.tar.gz
   mv /usr/local/src/ioncube /usr/local
   EOH
 end
