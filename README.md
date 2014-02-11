@@ -6,7 +6,9 @@ Installs and configures Zend Ioncube extension
 
 include_recipe "php-ioncube"
 
-Add attribute in to your node to set php version else default is php 5.3
+Add the [:php_ioncube][:version] attribute to your node to set the
+php version, else the version is determined from the installed version
+of PHP: 
 
 "php_ioncube": {
   "version":"5.4"
