@@ -1,11 +1,4 @@
 include_recipe "php"
-pkgs = ["wget"]
-
-pkgs.each do |pkg|
-  package pkg do
-    action :install
-  end
-end
 
 case node[:kernel][:machine]
 when 'x86_64'
