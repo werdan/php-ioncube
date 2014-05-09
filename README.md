@@ -2,14 +2,17 @@
 
 Installs and configures Zend Ioncube extension
 
+Works for Chef >= 11.0
+
 # Usage
 
-include_recipe "php-ioncube"
+If you do not need to notify any resources (apache2, php-fpm), it is one line only:
 
-Add the [:php_ioncube][:version] attribute to your node to set the
-php version, else the version is determined from the installed version
-of PHP: 
+    include_recipe "php-ioncube::install"
+    
+Otherwise, you'll need to use LWRP, like this:
 
-"php_ioncube": {
-  "version":"5.4"
-},
+    php_ioncube_install "ioncube" do
+        action :install
+        notifies :restart,"service['apache2']"
+    end
